@@ -14,7 +14,8 @@ router.get('/', (req, res, next) => {
         pageTitle: "Shop",
         path: '/',
         hasProducts: products.length > 0,
-        productCSS: true});
+        productCSS: true,
+        activeShop: true});
 });
 
 module.exports = router;
