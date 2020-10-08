@@ -27,8 +27,9 @@ module.exports = class Product {
         fs.readFile(p, (err, data) => {
             if (err) {
                 cb([])
+            } else {
+                cb(JSON.parse(data))
             }
-            cb(JSON.stringify(data))
         })
     }
 }
