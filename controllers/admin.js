@@ -6,16 +6,17 @@ exports.getAddProductPage = (req, res, next) => {
 }
 
 exports.postAddProductPage = (req, res, next) => {
-    const product = new Product(req.body.title);
+    const { title, imageUrl, price, description } = req.body
+    const product = new Product(title, imageUrl, description, price);
     product.save();
     res.redirect('/');
 }
 
-exports.getProducts = (req, res, next) => {
+exports.getAdminProducts = (req, res, next) => {
     Product.fetchAll((products) => {
-        res.render('shop/product-list', {
+        res.render('admin/products', {
             prods: products,
-            pageTitle: "Shop",
-            path: '/'});
+            pageTitle: "Admin Products",
+            path: '/admin/products'});
     })
 }
