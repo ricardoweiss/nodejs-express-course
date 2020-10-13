@@ -18,6 +18,17 @@ exports.getProducts = (req, res, next) => {
     })
 }
 
+exports.getProduct = (req, res, next) => {
+    const prodId = req.params.productId;
+    Product.findById(prodId, p => {
+        res.render('shop/product-detail', {
+            product: p,
+            pageTitle: 'Product Detail',
+            path: '/products'
+        })
+    })
+}
+
 exports.getCartPage = (req, res, next) => {
     res.render('shop/cart', {pageTitle: "Cart",
         path: '/cart'})

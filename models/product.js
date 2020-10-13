@@ -14,6 +14,7 @@ module.exports = class Product {
     }
 
     save() {
+        this.id = Math.random();
         fs.readFile(p, (err, data) => {
             let products = [];
             if (!err) {
@@ -33,6 +34,13 @@ module.exports = class Product {
             } else {
                 cb(JSON.parse(data))
             }
+        })
+    }
+
+    static findById(id, cb) {
+        this.fetchAll((products) => {
+            const product = products.find(p => p.id === id)
+            cb(product)
         })
     }
 }
