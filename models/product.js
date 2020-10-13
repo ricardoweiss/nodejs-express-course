@@ -39,7 +39,10 @@ module.exports = class Product {
 
     static findById(id, cb) {
         this.fetchAll((products) => {
-            const product = products.find(p => p.id === id)
+            const product = products.find(p => {
+                const stringId = p.id.toString()
+                return stringId === id
+            })
             cb(product)
         })
     }
