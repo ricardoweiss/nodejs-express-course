@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path')
 
 const rootDir = require('../util/path')
+const Product = require('./product')
 
 const p = path.join(rootDir, 'data', 'cart.json')
 
@@ -28,6 +29,18 @@ module.exports = class Cart {
             fs.writeFile(p, JSON.stringify(cart), err => {
                 /*console.log(err)*/
             })
+        })
+    }
+
+    static getProductsFromCart(cb) {
+        fs.readFile(p, (err, fileContent) => {
+            if (err) {
+                return
+            }
+            const cart = JSON.parse(fileContent);
+            const products = cart.products;
+
+            cb(products)
         })
     }
 
