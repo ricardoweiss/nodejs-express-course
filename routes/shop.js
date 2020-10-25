@@ -1,3 +1,4 @@
+/*
 const express = require('express');
 
 const shopControllers = require('../controllers/shop');
@@ -13,4 +14,4 @@ router.post('/create-order', shopControllers.postOrder);
 router.get('/products', shopControllers.getProducts);
 router.get('/products/:productId', shopControllers.getProduct);
 
-module.exports = router;
+module.exports = router;*/

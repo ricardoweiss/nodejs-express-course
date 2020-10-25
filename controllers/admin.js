@@ -10,21 +10,15 @@ exports.getAddProductPage = (req, res, next) => {
 exports.postAddProductPage = (req, res, next) => {
     const { title, imageUrl, price, description } = req.body
     console.log(req.user)
-    req.user
-        .createProduct({
-        title: title,
-        imageUrl: imageUrl,
-        price: price,
-        description: description
-    })
-        .then(r => {
-            res.redirect('/admin/products')
+    const product = new Product(title, price, description, imageUrl)
+    product.save()
+        .then(() => {
+            res.redirect('/admin/add-product')
         })
-        .catch(e => {
-            console.log(e)
-        })
+        .catch(e => console.log(e))
 }
 
+/*
 exports.getEditProductPage = (req, res, next) => {
     const prodId = req.params.productId;
     req.user.getProducts({where: { id: prodId }})
@@ -78,4 +72,4 @@ exports.getAdminProducts = (req, res, next) => {
                 path: '/admin/products'});
     }).catch(e => console.log(e))
 
-}
+}*/

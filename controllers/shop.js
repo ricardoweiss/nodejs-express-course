@@ -1,3 +1,4 @@
+/*
 const Product = require('../models/product')
 const Order = require('../models/order')
 
@@ -136,3 +137,4 @@ exports.postOrder = (req, res) => {
         })
         .catch(e => console.log(e))
 }
+*/
