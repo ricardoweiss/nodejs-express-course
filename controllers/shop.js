@@ -1,32 +1,34 @@
-/*
+
 const Product = require('../models/product')
 const Order = require('../models/order')
 
-
 exports.getIndexPage = (req, res) => {
-    Product.findAll()
+    Product.fetchAll()
         .then(products => {
             res.render(`shop/index`, {
                 prods: products,
                 pageTitle: "Shop",
                 path: `/index`});
         })
+        .catch(e => console.log(e))
 }
 
 exports.getProducts = (req, res) => {
-    Product.findAll()
+    Product.fetchAll()
         .then(products => {
             res.render(`shop/product-list`, {
                 prods: products,
                 pageTitle: "Products",
                 path: `/product-list`});
         })
+        .catch(e => console.log(e))
 }
 
 exports.getProduct = (req, res) => {
     const prodId = req.params.productId;
-    Product.findByPk(prodId)
+    Product.findById(prodId)
         .then(product => {
+            console.log(product)
             if (!product) {
                 return res.redirect('/')
             }
@@ -38,6 +40,10 @@ exports.getProduct = (req, res) => {
         })
         .catch(e => console.log(e))
 }
+/*
+
+
+
 
 exports.getCartPage = (req, res, next) => {
     req.user.getCart()

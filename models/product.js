@@ -1,3 +1,4 @@
+const mongodb = require('mongodb');
 const getDb = require('../util/database').getDb;
 
 class Product {
@@ -15,6 +16,16 @@ class Product {
                 console.log(result)
             })
             .catch(e => console.log(e))
+    }
+
+    static fetchAll() {
+        const db = getDb();
+        return db.collection('products').find().toArray()
+    }
+
+    static findById(id) {
+        const db = getDb()
+        return db.collection('products').find({_id: new mongodb.ObjectId(id)}).next()
     }
 }
 
