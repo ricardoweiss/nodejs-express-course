@@ -9,7 +9,7 @@ exports.getAddProductPage = (req, res, next) => {
 
 exports.postAddProductPage = (req, res, next) => {
     const { title, imageUrl, price, description } = req.body
-    const product = new Product(title, price, description, imageUrl)
+    const product = new Product(title, price, description, imageUrl, null, req.user._id)
     product.save()
         .then(() => {
             res.redirect('/admin/products')
@@ -44,7 +44,7 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
     const prodId = req.body.productId
-    Product.deleteById(prodId)
+    Product.deleteById(prodId, req.user._id)
         .then(result => {
             res.redirect('/admin/products')
         })
