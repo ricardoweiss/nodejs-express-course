@@ -1,16 +1,23 @@
-
 const Product = require('../models/product')
 
 
 exports.getAddProductPage = (req, res, next) => {
-    res.render('admin/edit-product', {pageTitle: "Add Product",
+    res.render('admin/edit-product', {
+        pageTitle: "Add Product",
         path: 'admin/add-product',
-        product: false})
+        product: false
+    })
 }
 
 exports.postAddProductPage = (req, res, next) => {
-    const { title, imageUrl, price, description } = req.body
-    const product = new Product({title: title, price: price, description: description, imageUrl: imageUrl})
+    const {title, imageUrl, price, description} = req.body
+    const product = new Product({
+        title: title,
+        price: price,
+        description: description,
+        imageUrl: imageUrl,
+        userId: req.user
+    })
     product.save()
         .then(() => {
             res.redirect('/admin/products')
@@ -22,19 +29,21 @@ exports.postAddProductPage = (req, res, next) => {
 exports.getEditProductPage = (req, res, next) => {
     const prodId = req.params.productId;
     Product.findById(prodId)
-        .then( product => {
+        .then(product => {
             if (!product) {
                 return res.redirect('/')
             }
-            res.render('admin/edit-product', {pageTitle: "Edit Product",
+            res.render('admin/edit-product', {
+                pageTitle: "Edit Product",
                 path: 'admin/edit-product',
-                product: product})
-    }).catch(e => console.log(e))
+                product: product
+            })
+        }).catch(e => console.log(e))
 
 }
 
 exports.postEditProduct = (req, res, next) => {
-    const { title, imageUrl, price, description, productId } = req.body
+    const {title, imageUrl, price, description, productId} = req.body
 
     Product.findById(productId)
         .then(product => {
@@ -65,8 +74,9 @@ exports.getAdminProducts = (req, res, next) => {
             res.render('admin/products', {
                 prods: prods,
                 pageTitle: "Admin Products",
-                path: '/admin/products'});
-    }).catch(e => console.log(e))
+                path: '/admin/products'
+            });
+        }).catch(e => console.log(e))
 
 }
 
