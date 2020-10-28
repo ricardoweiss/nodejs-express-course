@@ -1,9 +1,8 @@
-
 const Product = require('../models/product')
-const Order = require('../models/order')
+
 
 exports.getIndexPage = (req, res) => {
-    Product.fetchAll()
+    Product.find()
         .then(products => {
             res.render(`shop/index`, {
                 prods: products,
@@ -14,7 +13,7 @@ exports.getIndexPage = (req, res) => {
 }
 
 exports.getProducts = (req, res) => {
-    Product.fetchAll()
+    Product.find()
         .then(products => {
             res.render(`shop/product-list`, {
                 prods: products,
@@ -40,7 +39,7 @@ exports.getProduct = (req, res) => {
         })
         .catch(e => console.log(e))
 }
-
+/*
 exports.postCart = (req, res, next) => {
     const prodId = req.body.productId
     Product.findById(prodId)
@@ -52,7 +51,7 @@ exports.postCart = (req, res, next) => {
         })
         .catch(e => console.log(e))
 
-    /*let fetchedCart;
+    /!*let fetchedCart;
     let newQuantity = 1
     req.user.getCart()
         .then(cart => {
@@ -78,7 +77,7 @@ exports.postCart = (req, res, next) => {
         .then(() => {
             res.redirect('/cart')
         })
-        .catch(e => console.log(e))*/
+        .catch(e => console.log(e))*!/
 }
 
 
@@ -126,3 +125,4 @@ exports.postOrder = (req, res) => {
         .catch(e => console.log(e))
 }
 
+*/

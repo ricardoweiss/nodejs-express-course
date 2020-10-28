@@ -1,3 +1,4 @@
+
 const Product = require('../models/product')
 
 
@@ -9,7 +10,7 @@ exports.getAddProductPage = (req, res, next) => {
 
 exports.postAddProductPage = (req, res, next) => {
     const { title, imageUrl, price, description } = req.body
-    const product = new Product(title, price, description, imageUrl, null, req.user._id)
+    const product = new Product({title: title, price: price, description: description, imageUrl: imageUrl})
     product.save()
         .then(() => {
             res.redirect('/admin/products')
@@ -34,8 +35,15 @@ exports.getEditProductPage = (req, res, next) => {
 
 exports.postEditProduct = (req, res, next) => {
     const { title, imageUrl, price, description, productId } = req.body
-    const product = new Product(title, price, description, imageUrl, productId)
-    product.save()
+
+    Product.findById(productId)
+        .then(product => {
+            product.title = title;
+            product.imageUrl = imageUrl;
+            product.price = price;
+            product.description = description;
+            product.save()
+        })
         .then(result => {
             res.redirect('/admin/products')
         })
@@ -44,7 +52,7 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
     const prodId = req.body.productId
-    Product.deleteById(prodId, req.user._id)
+    Product.findOneAndRemove(prodId)
         .then(result => {
             res.redirect('/admin/products')
         })
@@ -52,7 +60,7 @@ exports.postDeleteProduct = (req, res, next) => {
 }
 
 exports.getAdminProducts = (req, res, next) => {
-    Product.fetchAll()
+    Product.find()
         .then(prods => {
             res.render('admin/products', {
                 prods: prods,
@@ -61,3 +69,4 @@ exports.getAdminProducts = (req, res, next) => {
     }).catch(e => console.log(e))
 
 }
+
